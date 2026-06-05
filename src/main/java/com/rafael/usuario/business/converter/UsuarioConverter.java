@@ -104,23 +104,25 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public Endereco updateEndereco(EnderecoDTO dto, Endereco endereco){
+    public Endereco updateEndereco(EnderecoDTO dto, Endereco entity){
         return Endereco.builder()
-                .id(endereco.getId())
-                .rua(dto.getRua() != null ?  dto.getRua() : endereco.getRua())
-                .numero(dto.getNumero() != null ?  dto.getNumero() : endereco.getNumero())
-                .cidade(dto.getCidade() != null ? dto.getCidade(): endereco.getCidade())
-                .estado(dto.getEstado() != null ? dto.getEstado() : endereco.getEstado())
-                .cep(dto.getCep() != null ? dto.getCep() : endereco.getCep())
-                .complemento(dto.getComplemento() != null ? dto.getComplemento() : endereco.getComplemento())
+                .id(entity.getId())
+                .rua(dto.getRua() != null ?  dto.getRua() : entity.getRua())
+                .numero(dto.getNumero() != null ?  dto.getNumero() : entity.getNumero())
+                .cidade(dto.getCidade() != null ? dto.getCidade(): entity.getCidade())
+                .estado(dto.getEstado() != null ? dto.getEstado() : entity.getEstado())
+                .cep(dto.getCep() != null ? dto.getCep() : entity.getCep())
+                .complemento(dto.getComplemento() != null ? dto.getComplemento() : entity.getComplemento())
+                .usuario_id(entity.getUsuario_id())
                 .build();
     }
 
-    public Telefone updateTelefone(TelefoneDTO dto, Telefone telefone){
+    public Telefone updateTelefone(TelefoneDTO dto, Telefone entity){
         return Telefone.builder()
-                .id(telefone.getId())
-                .ddd(dto.getDdd() != null ? dto.getDdd() : telefone.getDdd())
-                .numero(dto.getNumero() != null ? dto.getNumero() : telefone.getNumero())
+                .id(entity.getId())
+                .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
+                .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
+                .usuario_id(entity.getUsuario_id())
                 .build();
     }
 

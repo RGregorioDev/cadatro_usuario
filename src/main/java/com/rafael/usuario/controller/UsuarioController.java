@@ -6,7 +6,6 @@ import com.rafael.usuario.business.dto.EnderecoDTO;
 import com.rafael.usuario.business.dto.TelefoneDTO;
 import com.rafael.usuario.business.dto.UsuarioDTO;
 import com.rafael.usuario.infrastructure.clients.ViaCepDTO;
-import com.rafael.usuario.infrastructure.security.JwtUtil;
 import com.rafael.usuario.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,8 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +25,6 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final ViaCepService viaCepService;
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
 
     // Post Methods
     @PostMapping
@@ -46,12 +42,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "403", description = "Credenciais inválidas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
-    public String login(@RequestBody UsuarioDTO usuarioDTO){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(),
-                        usuarioDTO.getSenha())
-        );
-        return "Bearer " + jwtUtil.generateToken(authentication.getName());
+    public ResponseEntity<String> login(@RequestBody UsuarioDTO usuarioDTO){
+        return ResponseEntity.ok(usuarioService.autenticarUsuario(usuarioDTO));
     }
 
     @PostMapping("/endereco")
